@@ -57,4 +57,24 @@
   - **Tiempo de PR hasta despliegue (lead time)**: Este tiempo representa qué tan bien se integran nuevos cambios a la base de código. Menor tiempo representa mayor tasa de errores encontrados y solucionados rápidamente y una mayor tasa de despliegue.
     - Para recolectar esta métrica, se pueden desarrollar herramientas locales (*in-house*) o scripts para medir los tiempos.
 
+### Evolución a DevSecOps
 
+- Diferencia **SAST** y **DAST** y ubícalos en el pipeline
+  - SAST y DAST son un conjunto de herramientas que permiten el análisis de código en diferentes momentos para detectar vulnerabilidades.
+    - SAST se enfoca en el código *estático* o sin ejecutarse para hacer una revisión *white-box*, con toda la información presente en el código. Este tipo de análisis se realiza en las fases tempranas del código, idealmente antes o después de hacer commit.
+    - DAST se enfoca en el código de forma *dinámica*. Es decir, realiza análisis de seguridad mientras la alicación está siengo ejecutada, tomando un enfoque similar a un atacante al buscar vulnerabilidades al estilo *black-box*, sin conocimiento del código detrás de la aplicación. Este tipo de análisis se realiza en las últimas fases del pipeline, en una rama especial para el análisis o hasta en producción.
+
+- Los *gates* de seguridad o *security gates* son puntos en el ciclo de desarrollo en donde el código debe cumplir con ciertos estándares de seguridad antes de pasar a las siguientes fases. Algunos umbrales medibles pueden ser:
+  - **Bloqueo por seguridad crítica**: Si alguna herramienta de análisis detecta una vulnerabilidad crítica en el código, este es bloqueado y no se permite su pase a las siguientes fases antes de que este error sea corregido.
+  - **Cobertura**: El código puede ser bloqueado si se detecta que las pruebas no cubren más de, por ejemplo, el 70% del código.
+  
+-  ¿Cómo evitar el "teatro de seguridad"? Propón **dos señales de eficiencia** y **cómo** medirlas.
+  - El teatro de la seguridad se debe evitar, en primer lugar, reconociendo cualquier medida ineficiente de seguridad que de una sensación de protección por encima de realmente proteger un sistema. Una vez reconocido, se debe reemplazar con medidas de seguridad genuinas.
+  - Dos posibles señales de eficacia de las medidas de seguridad son:
+    - **Disminución de hallazgos repetidos**: Comparar el número de vulnerabilidades repetidas encontradas en escaneos de vulnerabilidad. Mientras menos se repitan, mayor énfasis en la seguridad se tiene en la organización.
+    - **Mean Time To Repair**: Es el tiempo que toma corregir un error de seguridad. Esta medida representará la importancia de corregir errores detectados en una organización.
+    
+### CI/CD y estrategias de despliegue
+
+- Inserta una imagen del pipeline o canary.
+![](./imagenes/3.png)
