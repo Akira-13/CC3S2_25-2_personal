@@ -9,3 +9,5 @@ GitLab. (n.d.). SAST vs. DAST. about.gitlab.com. https://about.gitlab.com/topics
 Borges, E. (n.d.). What is Security Theater? https://www.recordedfuture.com/threat-intelligence-101/legal-ethical-considerations/security-theater
 
 Hirschberg, B. (2025, 15 enero). Securing CI/CD Pipelines Through Security Gates with Kubescape. ARMO. https://www.armosec.io/blog/securing-ci-cd-pipelines-security-gates//
+
+¿Qué es la implementación azul-verde? (s. f.). https://www.redhat.com/es/topics/devops/what-is-blue-green-deployment

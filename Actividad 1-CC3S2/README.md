@@ -78,3 +78,16 @@
 
 - Inserta una imagen del pipeline o canary.
 ![](./imagenes/3.png)
+
+- Elige **una estrategia** para un microservicio crítico y justifica.
+  - Una opción viable sería el despliegue *blue-green*, en el que se transfiere poco a poco el tráfico de usuarios de un servicio estable a uno nuevo, ambos en producción. Esto se debe porque así se verifica que el microservicio cumple con las expectativas de funcionamiento con un grupo de usuarios reducidos. Una vez que se cumplan estas expectativas, se pueden aumentar el número de usuarios.
+- Crea una tabla breve de riesgos vs. mitigaciones.
+| **Riesgo**                                            | **Mitigación**                                                                                                                    |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Regresión funcional en endpoints de login/refresh** | Validación de **contratos automatizada** (contract tests) y **canary con métricas SLO** antes de promover.                        |
+| **Costo operativo del doble despliegue (Blue-Green)** | Definir **límites de convivencia temporales** (ej. mantener Blue activo solo 24–48h) y apagar entorno previo tras estabilización. |
+| **Manejo de sesiones/estado compartido**              | Usar **stores centralizados** (Redis) + “**draining**” de sesiones antiguas + compatibilidad de esquemas durante transición.      |
+
+- Si el KPI técnico se mantiene, pero cae una métrica de producto (conversión), explica por qué ambos tipos de métricas deben coexistir en el gate.
+  - Dejar que una métrica caiga y solo fijarse en una de estas puede indicar que ocurre un error en el flujo de negocio causado por algún cambio técnico.
+  - Un gate que tome en cuenta ambos aspectos, el técnico y el de producto, asegura que el servicio funciona bien técnicamente y que provee un impacto positivo en los usuarios.
