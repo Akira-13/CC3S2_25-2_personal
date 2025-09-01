@@ -82,6 +82,7 @@
 - Elige **una estrategia** para un microservicio crítico y justifica.
   - Una opción viable sería el despliegue *blue-green*, en el que se transfiere poco a poco el tráfico de usuarios de un servicio estable a uno nuevo, ambos en producción. Esto se debe porque así se verifica que el microservicio cumple con las expectativas de funcionamiento con un grupo de usuarios reducidos. Una vez que se cumplan estas expectativas, se pueden aumentar el número de usuarios.
 - Crea una tabla breve de riesgos vs. mitigaciones.
+
 | **Riesgo**                                            | **Mitigación**                                                                                                                    |
 | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | **Regresión funcional en endpoints de login/refresh** | Validación de **contratos automatizada** (contract tests) y **canary con métricas SLO** antes de promover.                        |
