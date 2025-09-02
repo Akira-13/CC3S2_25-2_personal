@@ -43,6 +43,8 @@
   - **Spaghetti code**: Cuando el código se vuelve difícil de leer, poco modular, poco estructurado y de alta complejidad. Esto resulta en código difícil de mantener y en errores más difíciles de corregir a la larga.
   - **Throw over the wall**: Dejar el trabajo a otro equipo o a etapas tardías esperando que alguien más lo haga. Esto reduce la colaboración entre equipos y en caso de un incidente puede aumentar el MTTR, ya que un equipo que no desarrolló el código puede encontrarse con partes difíciles de comprender.
 
+---
+
 ### Principios y beneficios de DevOps
 
 - Decribe CI y CD destacando tamaño de cambios, pruebas automatizadas cercanas al código y colaboración.
@@ -56,6 +58,8 @@
 - Propón un indicador observable para medir mejoras de colaboración Dev-Ops.
   - **Tiempo de PR hasta despliegue (lead time)**: Este tiempo representa qué tan bien se integran nuevos cambios a la base de código. Menor tiempo representa mayor tasa de errores encontrados y solucionados rápidamente y una mayor tasa de despliegue.
     - Para recolectar esta métrica, se pueden desarrollar herramientas locales (*in-house*) o scripts para medir los tiempos.
+
+---
 
 ### Evolución a DevSecOps
 
@@ -74,6 +78,8 @@
     - **Disminución de hallazgos repetidos**: Comparar el número de vulnerabilidades repetidas encontradas en escaneos de vulnerabilidad. Mientras menos se repitan, mayor énfasis en la seguridad se tiene en la organización.
     - **Mean Time To Repair**: Es el tiempo que toma corregir un error de seguridad. Esta medida representará la importancia de corregir errores detectados en una organización.
     
+---
+
 ### CI/CD y estrategias de despliegue
 
 - Inserta una imagen del pipeline o canary.
@@ -92,3 +98,65 @@
 - Si el KPI técnico se mantiene, pero cae una métrica de producto (conversión), explica por qué ambos tipos de métricas deben coexistir en el gate.
   - Dejar que una métrica caiga y solo fijarse en una de estas puede indicar que ocurre un error en el flujo de negocio causado por algún cambio técnico.
   - Un gate que tome en cuenta ambos aspectos, el técnico y el de producto, asegura que el servicio funciona bien técnicamente y que provee un impacto positivo en los usuarios.
+
+---
+
+### Fundamentos prácticos sin comandos
+
+#### **HTTP - Contrato observable**
+
+  ![](./imagenes/4.png)
+  
+  - Método: GET
+  - Código de estado: 200 OK
+  - Cabeceras: 
+    - Cache-control: private, max-age=0
+    - X-Frame-Options: SAMEORIGIN
+  - Importancia
+    - El cache-control controla cómo clientes y proxies guardan la respuesta, lo cual afecta el rendimiento.
+    - X-Frame-Options muestra opciones de seguridad, importante para la observabilidad durante incidentes.
+
+#### **DNS - nombres y TTL**
+
+  ![](./imagenes/5.png)
+  
+  - Tipos de registro: A
+  - TTL: 2m 54s
+  - El TTL afecta los rollbacks en el tiempo de propagación de cambios. Mayor TTL implicaría que los cambios demorarían en llegar a una mayor cantidad de usuarios, mientras que menor TTL es más eficiente para rollbacks frecuentes.
+
+#### **TLS - seguridad en tránsito**
+
+  ![](./imagenes/6.png)
+
+  - Vigencia: no antes de 11/08/25 hasta no después de 03/09/25
+  - Emisora: Google Trust Services
+  - Si no se puede validar el certificado, el navegador mostrará errores de certificados advirtiendo del riesgo que supone interacturas con la página web.
+
+#### **12-Factor - port binding, configuración, logs**
+  
+  - Para parametrizar el puerto sin tocar el código, esta debe ser enviada como una variable de entorno, la cual es leída en arranque.
+  - Los logs deben ser vistos en la sálida estándar del programa. Escribir los logs manualmente implica el riesgo de errores humanos o de fragmentaciones entre máquinas.
+  - Escribir credenciales directamente en el código implica un grave riesgo de filtración de estas mismas. La reproducibilidad también se ve afectada al tener las credenciales explícitas en el código, ya que quizá se necesiten otras credenciales en otras ramas y se tenga que modificar y recompilar.
+
+#### **Checklist de diagnóstico (incidente simulado)**
+
+  1. Verificar contrato HTTP
+  2. Revisar cabeceras HTTP
+  3. Comprobar resolución DNS 
+  4. Inspeccionar certificado TLS
+  5. Verificar puertos en escucha
+  6. Correlacionar con logs de aplicación
+
+---
+
+### Desafíos DevOps y mitigaciones
+
+ ![](./imagenes/7.png) 
+ 
+| **Riesgo**                                                    | **Mitigación concreta**                                                                                                                              |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Fallo crítico en producción tras un cambio**                | **Rollback inmediato**: mantener versión anterior para revertir en segundos si el nuevo release falla.            |
+| **Impacto masivo por bug no detectado**                       | **Despliegues graduales (Canary/Rollout progresivo)**: liberar a un 1–5% de usuarios primero y monitorear SLOs antes de extender a todos.            |
+| **Errores humanos en código o configuración sensible**        | **Revisión cruzada (peer review + pruebas automatizadas)**: exigir al menos un reviewer y validaciones de CI antes de permitir la promoción.         |
+| **Incidente que afecta a todos los usuarios al mismo tiempo** | **Límites de blast radius**: segmentar el despliegue por región o cluster; usar *feature flags* para habilitar solo en subconjuntos controlados. |
+
