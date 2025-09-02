@@ -4,7 +4,7 @@
 
 - Nombre: Diego Akira García Rojas
 - Fecha de presentación: 03-09-25
-- Tiempo invertido: 01:10
+- Tiempo invertido: 03:20
 - Entorno:
   - Editor de texto: Doom Emacs
   - Cliente Git: Magit
