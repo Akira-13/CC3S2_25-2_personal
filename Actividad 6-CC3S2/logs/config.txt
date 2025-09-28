@@ -1,0 +1,7 @@
+credential.https://github.com.helper=
+credential.https://github.com.helper=!/usr/bin/gh auth git-credential
+credential.https://gist.github.com.helper=
+credential.https://gist.github.com.helper=!/usr/bin/gh auth git-credential
+user.email=xxxxxxxxxxxxxxxxxx
+user.name=Akira-13
+init.defaultbranch=main
