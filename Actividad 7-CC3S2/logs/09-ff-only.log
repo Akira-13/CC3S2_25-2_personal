@@ -1,0 +1,7 @@
+* 567f7ac (HEAD -> main, feature-ffonly) commit en feature-ffonly
+* aedfc54 Merge branch 'bugfix/rollback-feature'
+* eaed00f Revert "Resuelve el conflicto de fusión entre la versión main y feature/advanced-feature"
+* f138a53 Resuelve el conflicto de fusión entre la versión main y feature/advanced-feature
+* 35d5811 Actualizar el mensaje main.py en la rama main
+* e4e6993 (feature/new-feature, feature/another-new-feature) Congirua la documentación base del repositorio
+* fd2e0dd Commit inicial con README.md
