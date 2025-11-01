@@ -1,0 +1,20 @@
+{
+  "resource": {
+    "null_resource": {
+      "legacy": {
+        "triggers": {
+          "port": "${var.port}",
+          "config_sha": "${sha1(file(\"${path.module}/../legacy/config.cfg\"))}",
+          "script_sha": "${sha1(file(\"${path.module}/../legacy/run.sh\"))}"
+        },
+        "provisioner": [
+          {
+            "local-exec": {
+              "command": "bash -lc 'set -a; source ${path.module}/../legacy/config.cfg; set +a; echo \"Arrancando $PORT\"'"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
