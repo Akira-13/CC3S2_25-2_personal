@@ -145,7 +145,3 @@ null_resource.legacy (local-exec): Arrancando 8080
 null_resource.legacy: Creation complete after 0s [id=8037177551834641824]
 
 ```
-
-### Fase 3
-
-#### Control de versiones comunica contexto
